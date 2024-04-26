@@ -1,3 +1,4 @@
+import json
 import logging
 import requests
 import azure.functions as func
@@ -21,7 +22,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
         print(response.json())
         
-        return func.HttpResponse(f"Hello, {body_part}. This HTTP triggered function executed successfully.")
+        return func.HttpResponse(f"{json.dumps(response.json())}")
     else:
         return func.HttpResponse(
              "This HTTP triggered function executed successfully. Pass a body_part in the query string or in the request body for a personalized response.",
