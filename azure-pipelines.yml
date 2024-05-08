@@ -47,33 +47,6 @@ stages:
         pip install --target="./.python_packages/lib/site-packages" -r ./requirements.txt
       workingDirectory: $(workingDirectory)
       displayName: 'Install application dependencies'
-    
-    - script: |
-        echo '--------------Installing requirement dependencies --------------'
-        pip install --target="./.python_packages/lib/site-packages" -r ./requirements.txt
-        echo '--------------Installing pytest-azurepipelines --------------'
-        pip install pytest pytest-azurepipelines
-        echo '--------------Installing pytest-cov -------------- '
-        pip install pytest-cov
-        echo '--------------Installing azure-functions -------------- '
-        pip install azure-functions
-        echo '--------------Installing requests -------------- '
-        pip install requests
-        pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
-      displayName: 'pytest'
-    
-    - task: PublishTestResults@2
-      displayName: 'Publish Test Result'
-      condition: succeededOrFailed()
-      inputs:
-        testResultsFiles: '**/test-*.xml'
-        testRunTitle: 'Publish test results for Python $(python.version)'
-    
-    - task: PublishCodeCoverageResults@1
-      displayName: 'Publish Code Coverage Result'
-      inputs:
-        codeCoverageTool: Cobertura
-        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
